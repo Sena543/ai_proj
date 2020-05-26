@@ -1,0 +1,21 @@
+body{
+    text-align: center;
+}
+
+div.welcome {    
+    font-size: 50px;
+    border:  dodgerblue double;
+    padding-bottom: 50px;
+}
+
+#upload_file_form { 
+    font-size: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#prediction_results{
+    font-size: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}

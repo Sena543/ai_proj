@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'pages/styles.css' %}">
+    </head>
+    <title> Prosate Cancer Prediction</title>
+    <body>
+        <div class="welcome" id="welcome" >
+            <p>Welcome to the Prostate Cancer Prediction Page</p>
+        </div>
+
+       <form enctype="multipart/form-data" id="upload_file_form" action="uploadImage" method="POST" >{% csrf_token %}
+        <!--<label for="image_upload">Select image for prediction:</label> 
+        <input type="file"  id="image_upload" name="image_">-->
+        {{form.as_p}}
+        </br>
+        <input type="submit" value="Make Prediction">
+       </form>
+
+       <div name="prediction_results" id="prediction_results" >
+            {% if y_value %}
+            <p>{{ y_value }}</p>
+            {% endif %}
+       </div>
+    </body>
+</html>
+
+
+<!--
+<label>Select file for prediction:</label>
+            <input type='file' id="file_upload" name='file_upload'>
+
+-->

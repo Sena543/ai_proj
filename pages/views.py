@@ -5,21 +5,24 @@ from PIL import Image
 
 from .forms import ImageForm
 from .models import ImageUpload
+from .tfModelClass import Predict
 
-# Create your views here.
+'''
+index api is the landing page of this web application
+serves up the homepage/ prediction page of the app when called
+'''
 def index(request):
-    y = 459989845+459480-987958
     context = {
-        'y_value':y 
+        'results':'Results of the prediction would appear here' 
     } 
     context['form'] = ImageForm
     return render(request, 'pages/index.htm', context)
 
 
 def getImage(request):
-    y = 459989845+459480-987958
+    y = '...'
     context = {
-        'y_value':y 
+        'results':y 
     } 
     context['form'] = ImageForm()
     if(request.method == 'POST'):
@@ -36,10 +39,15 @@ def getImage(request):
     return render(request, 'pages/index.htm', context)
 
 
+'''
+This api is passes the uploaded image to the prediction class which returns a prediction value
+the value is sent to the client side as a response
+'''
 def uploadImage(request):
-    y = 459989845+459480-987958
+    load = Predict()
+    y='...'
     context = {
-        'y_value':y 
+        'results':y 
     } 
     context['form'] = ImageForm()
     if(request.method == 'POST'):
@@ -47,7 +55,13 @@ def uploadImage(request):
         if form.is_valid():
             form.save()
     img = form.cleaned_data['image']
-    print(img.image.width)
+    prediction =load.makePredictions(img)
+    if(round(prediction[0][0]*100<50)):
+        context['results'] = "Model does not detect the presence of cancer cells. Prediction accuracy: {} %".format(round(prediction[0][0]*100, 2))
+    else:
+        context['results'] = "Model detects the presence of cancer cells. Prediction accuracy: {} %".format(round(prediction[0][0]*100, 2))
+
+    print(prediction[0][0])
             
     return render(request, 'pages/index.htm', context)
 
@@ -57,10 +71,18 @@ convert pillow object to numpy array
 pass the numpy array to the tfclass model
 get the probality and the predicted classed
 display on the frontend by passing into context
+
+
+Model Predicts the presence of cancers cells with an accuracy of
 '''
 
 
 '''
+load = Predict()
+pathss = 'C:\\Users\\Sena\\Desktop\\stuff\\Conda\\go.jpg'
+prediction =load.makePredictions(pathss)
+print(prediction)
+
 
 use model.predict() to predict the probalibilties- gives the probality_prediction 
 and model.predict_classes() get the predictions of each class- gives the rounded_prediction

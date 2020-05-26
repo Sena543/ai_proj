@@ -3,6 +3,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'pages/styles.css' %}">
+        <link rel="icon" type="image/png" href="{% static 'pages/favi.png' %}">
     </head>
     <title> Prosate Cancer Prediction</title>
     <body>
@@ -15,12 +16,11 @@
         <input type="file"  id="image_upload" name="image_">-->
         {{form.as_p}}
         </br>
-        <input type="submit" value="Make Prediction">
+        <input type="submit" value="Make Prediction" id="submitbutton">
        </form>
-
        <div name="prediction_results" id="prediction_results" >
-            {% if y_value %}
-            <p>{{ y_value }}</p>
+            {% if results %}
+            <p>{{ results }}</p>
             {% endif %}
        </div>
     </body>

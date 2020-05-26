@@ -23,15 +23,12 @@ class Predict:
 
     def makePredictions(self, uploadedImage):
         mod = self.mod
-        try:
-            self.img = tf.keras.preprocessing.image.load_img(uploadedImage, target_size=(256,256))
-            self.x = tf.keras.preprocessing.image.img_to_array(self.img)
-            self.x = self.x.reshape(1,256,256,3).astype('float')
-            self.x /= 255
-            x= self.x
-            self.prediction = mod.predict(x)
-        except Exception as e:
-            print(e)
+        self.img = tf.keras.preprocessing.image.load_img(uploadedImage, target_size=(256,256))
+        self.x = tf.keras.preprocessing.image.img_to_array(self.img)
+        self.x = self.x.reshape(1,256,256,3).astype('float')
+        self.x /= 255
+        x= self.x
+        self.prediction = mod.predict(x)
         
         return self.prediction
 

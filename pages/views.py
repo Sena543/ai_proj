@@ -2,23 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from PIL import Image
-
+import os
 from .forms import ImageForm
 from .models import ImageUpload
 from .tfModelClass import Predict
+
 
 '''
 index api is the landing page of this web application
 serves up the homepage/ prediction page of the app when called
 '''
 def index(request):
+    #print(os.getcwd())
     context = {
         'results':'Results of the prediction would appear here' 
     } 
     context['form'] = ImageForm
     return render(request, 'pages/index.htm', context)
 
-
+'''
 def getImage(request):
     y = '...'
     context = {
@@ -36,7 +38,7 @@ def getImage(request):
         print(rrr)
         #read = Image.open(url)
         #print(read)  
-    return render(request, 'pages/index.htm', context)
+    return render(request, 'pages/index.htm', context) '''
 
 
 '''
@@ -54,8 +56,10 @@ def uploadImage(request):
         form= ImageForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-    img = form.cleaned_data['image']
+    img = form.cleaned_data['image'].name    
+    img = os.path.join(os.getcwd(),  "media", img)
     prediction =load.makePredictions(img)
+    
     if(round(prediction[0][0]*100<50)):
         context['results'] = "Model does not detect the presence of cancer cells. Prediction accuracy: {} %".format(round(prediction[0][0]*100, 2))
     else:
@@ -74,21 +78,6 @@ display on the frontend by passing into context
 
 
 Model Predicts the presence of cancers cells with an accuracy of
-'''
-
 
 '''
-load = Predict()
-pathss = 'C:\\Users\\Sena\\Desktop\\stuff\\Conda\\go.jpg'
-prediction =load.makePredictions(pathss)
-print(prediction)
 
-
-use model.predict() to predict the probalibilties- gives the probality_prediction 
-and model.predict_classes() get the predictions of each class- gives the rounded_prediction
-
-plotting confusion matrix for the classes with sciktit learn
-call the confusion matrix funtion on the test_labels and the rounded_predictions
-get confusion_matrix code from the scikit-learn site
-
-'''

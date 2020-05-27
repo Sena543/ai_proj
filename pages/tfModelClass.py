@@ -11,8 +11,8 @@ make the prediction on the image returning a probability value
 class Predict:
     def __init__(self):
         #self.model_path = "C:\\Users\\Sena\\Desktop\\stuff\\python\\ai_proj\\pages\\Prostate_model_json.json"
-        self.model_path = os.path.join(os.getcwd(), "pages\\Prostate_model_json.json")
-        self.weights_paths = os.path.join(os.getcwd(), "pages\\ProstateModelWeight.h5")
+        self.model_path = os.path.join(os.getcwd(), "pages", "Prostate_model_json.json")
+        self.weights_paths = os.path.join(os.getcwd(), "pages", "ProstateModelWeight.h5")
         
         self.json_file = open(self.model_path, 'r')
         self.loaded_model_json = self.json_file.read()

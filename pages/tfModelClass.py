@@ -12,13 +12,13 @@ make the prediction on the image returning a probability value
 
 class Predict:
     def __init__(self):
-        self.model_path = os.path.join(os.getcwd(), "pages/Prostate_model_json.json")
+        self.model_path = os.path.join(os.getcwd(), "pages", "Prostate_model_json.json")
         
         self.json_file = open(self.model_path, 'r')
         self.loaded_model_json = self.json_file.read()
         self.json_file.close()
         self.mod = keras.models.model_from_json(self.loaded_model_json)
-        self.mod.load_weights(os.path.join(os.getcwd(),"pages/ProstateModelWeight.h5"))
+        self.mod.load_weights(os.path.join(os.getcwd(),"pages", "ProstateModelWeight.h5"))
         
 
     def makePredictions(self, uploadedImage):
